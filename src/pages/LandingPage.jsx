@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ✅ Navbar Component
 const Navbar = ({ links, logoText }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <nav className="w-full bg-white shadow-sm py-4">
@@ -13,16 +16,19 @@ const Navbar = ({ links, logoText }) => {
         {/* Links for larger screens */}
 
         <div className="hidden lg:flex space-x-6 text-gray-600 border-b-amber-600">
-          {links.map((link, index) => (  
+          {links.map((link, index) => (
             <a
               key={index}
               href={link.href}
               className="hover:text-gray-900 transition py-3 border-b-amber-600"
-            > 
+            >
               {link.text}
-            </a> 
+            </a>
           ))}
-          <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 ">
+          <button
+            onClick={() => navigate("/signup")}
+            className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 "
+          >
             Sign Up
           </button>
         </div>
@@ -78,7 +84,10 @@ const Navbar = ({ links, logoText }) => {
               {link.text}
             </a>
           ))}
-          <button className="w-full bg-black text-white px-4 py-2 mt-2 rounded-lg hover:bg-gray-800">
+          <button
+            onClick={() => navigate("/signup")}
+            className="w-full bg-black text-white px-4 py-2 mt-2 rounded-lg hover:bg-gray-800"
+          >
             Sign Up
           </button>
         </div>
@@ -109,7 +118,7 @@ const Hero = ({ title, subtitle, buttonText, imageSrc }) => {
           <div>
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               {title} <br />
-              <span className="text-blue-600">for a Better Life</span>
+              <span className="text-orange-600">for a Better Life</span>
             </h1>
             <p className="text-lg text-gray-600 mb-6">{subtitle}</p>
             <Button text={buttonText} />
@@ -227,7 +236,7 @@ export const DigitalHealthID = () => {
         {/* Right Side: Content */}
         <div>
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-            Digital Health ID
+            Digital Jeevani ID
           </h2>
           <p className="text-lg text-gray-600 mb-6">
             Your unified health identity that securely stores and manages all
@@ -276,8 +285,7 @@ export const CTASection = ({ title, subtitle, buttonText, onClick }) => {
 export const Footer = () => {
   return (
     <div className="bg-gray-900 text-gray-500 text-center py-8">
-      <p>© 2025 Sanjeevani. All rights reserved.</p>      
-
+      <p>© 2025 Sanjeevani. All rights reserved.</p>
     </div>
   );
 };
@@ -293,8 +301,8 @@ const LandingPage = () => {
     { text: "Sign In", href: "#" },
   ];
 
-   // Handle button click event
-   const handleStartNow = () => {
+  // Handle button click event
+  const handleStartNow = () => {
     alert("Let's start your journey to better health!");
   };
   const startNow = () => {
@@ -306,7 +314,13 @@ const LandingPage = () => {
       {/* Navbar Section */}
       <Navbar
         links={navLinks}
-        logoText={<img src="/logo-2.jpg" alt="Logo" className="h-19 rounded-full w-auto" />}
+        logoText={
+          <img
+            src="/logo-2.jpg"
+            alt="Logo"
+            className="h-19 rounded-full w-auto"
+          />
+        }
       />
 
       {/* Hero Section */}
@@ -334,7 +348,6 @@ const LandingPage = () => {
         bgColor="bg-black"
         textColor="text-white"
       />
-
     </>
   );
 };
