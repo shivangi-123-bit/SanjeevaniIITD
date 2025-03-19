@@ -1,171 +1,178 @@
 import React, { useState } from "react";
-import { Activity, HeartPulse, Bed, Footprints } from "lucide-react";
+import { UploadCloud } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const data = {
-  heartRate: {
-    value: "72 BPM",
-    change: "+2% from last month",
-    positive: true,
-  },
-  bloodPressure: {
-    value: "120/80",
-    status: "Normal range",
-  },
-  sleepQuality: {
-    value: "7.5 hrs",
-    change: "-5% from last month",
-    positive: false,
-  },
-  steps: {
-    value: "8,243",
-    change: "+12% from last month",
-    positive: true,
-  },
-};
+const HealthProfile = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    age: "",
+    gender: "",
+    height: "",
+    weight: "",
+    systolic: "",
+    diastolic: "",
+    sugarLevel: "",
+    medicalRecords: null,
+  });
 
-const recommendations = [
-  {
-    icon: Footprints,
-    title: "Increase Daily Steps",
-    description: "Try to reach 10,000 steps daily",
-  },
-  {
-    icon: Bed,
-    title: "Improve Sleep Schedule",
-    description: "Aim for 8 hours of sleep",
-  },
-  {
-    icon: HeartPulse,
-    title: "Monitor Blood Pressure",
-    description: "Check twice daily",
-  },
-];
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "medicalRecords" && files && files.length > 0) {
+      setFormData({ ...formData, medicalRecords: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
 
-const HealthTrends = () => {
-  const [selectedRange, setSelectedRange] = useState("Last Month");
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Data Submitted:", formData);
+  };
 
-  const ranges = ["Last Week", "Last Month", "Last Year"];
+  // Handle skip button (navigate to another page)
+  const handleSkip = () => {
+    navigate("/dashboard"); // Redirect after skipping
+  };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Health Trends Overview</h2>
-        <div className="flex space-x-2">
-          {ranges.map((range) => (
-            <button
-              key={range}
-              onClick={() => setSelectedRange(range)}
-              className={`px-4 py-2 rounded-lg ${
-                selectedRange === range
-                  ? "bg-black text-white"
-                  : "bg-gray-200 text-gray-700"
-              }`}
-            >
-              {range}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Health Summary */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
-        <StatCard
-          title="Average Heart Rate"
-          value={data.heartRate.value}
-          change={data.heartRate.change}
-          positive={data.heartRate.positive}
-        />
-        <StatCard
-          title="Blood Pressure"
-          value={data.bloodPressure.value}
-          status={data.bloodPressure.status}
-        />
-        <StatCard
-          title="Sleep Quality"
-          value={data.sleepQuality.value}
-          change={data.sleepQuality.change}
-          positive={data.sleepQuality.positive}
-        />
-        <StatCard
-          title="Steps per Day"
-          value={data.steps.value}
-          change={data.steps.change}
-          positive={data.steps.positive}
-        />
-      </div>
-
-      {/* Health Metrics & Activity */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="h-48 bg-white rounded-xl shadow-md p-4">
-          <h3 className="font-semibold text-lg mb-2">Health Metrics Timeline</h3>
-          {/* Graph Placeholder */}
-          <div className="flex items-center justify-center h-full text-gray-400">
-            [Graph Coming Soon]
-          </div>
-        </div>
-        <div className="h-48 bg-white rounded-xl shadow-md p-4">
-          <h3 className="font-semibold text-lg mb-2">Activity Distribution</h3>
-          {/* Graph Placeholder */}
-          <div className="flex items-center justify-center h-full text-gray-400">
-            [Graph Coming Soon]
-          </div>
-        </div>
-      </div>
-
-      {/* Health Recommendations */}
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="font-semibold text-lg">Health Recommendations</h3>
-        <button className="text-blue-500">View All</button>
-      </div>
-      <div className="grid grid-cols-3 gap-4">
-        {recommendations.map((rec, index) => (
-          <RecommendationCard
-            key={index}
-            icon={rec.icon}
-            title={rec.title}
-            description={rec.description}
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
+      <div className="bg-white shadow-lg rounded-lg w-full max-w-4xl flex">
+        {/* Left Side - Doctor Image */}
+        <div className="w-1/2 p-6 hidden md:block">
+          <img
+            src={`${process.env.PUBLIC_URL}/doctor-image.png`}
+            alt="Doctor"
+            className="w-full h-auto rounded-lg"
           />
-        ))}
+        </div>
+
+        {/* Right Side - Form */}
+        <div className="w-full md:w-1/2 p-8">
+          <h2 className="text-2xl font-semibold mb-4">
+            Complete Your Health Profile
+          </h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Age Input */}
+            <input
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              placeholder="Enter your age"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-blue-500"
+            />
+
+            {/* Gender Dropdown */}
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-blue-500"
+            >
+              <option value="">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+
+            {/* Height & Weight */}
+            <div className="flex space-x-4">
+              <input
+                type="number"
+                name="height"
+                value={formData.height}
+                onChange={handleChange}
+                placeholder="Height (cm)"
+                className="w-1/2 px-4 py-2 border rounded-lg focus:outline-blue-500"
+              />
+              <input
+                type="number"
+                name="weight"
+                value={formData.weight}
+                onChange={handleChange}
+                placeholder="Weight (kg)"
+                className="w-1/2 px-4 py-2 border rounded-lg focus:outline-blue-500"
+              />
+            </div>
+
+            {/* Blood Pressure */}
+            <div className="flex space-x-4">
+              <input
+                type="number"
+                name="systolic"
+                value={formData.systolic}
+                onChange={handleChange}
+                placeholder="Systolic"
+                className="w-1/2 px-4 py-2 border rounded-lg focus:outline-blue-500"
+              />
+              <input
+                type="number"
+                name="diastolic"
+                value={formData.diastolic}
+                onChange={handleChange}
+                placeholder="Diastolic"
+                className="w-1/2 px-4 py-2 border rounded-lg focus:outline-blue-500"
+              />
+            </div>
+
+            {/* Sugar Level */}
+            <input
+              type="number"
+              name="sugarLevel"
+              value={formData.sugarLevel}
+              onChange={handleChange}
+              placeholder="Enter sugar level"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-blue-500"
+            />
+
+            {/* File Upload */}
+            <label
+              htmlFor="medicalRecords"
+              className="w-full border-dashed border-2 border-gray-300 rounded-lg p-4 flex items-center justify-center cursor-pointer"
+            >
+              <UploadCloud className="text-gray-500 mr-2" size={32} />
+              <span className="text-gray-500">
+                Drag and drop your medical records here or{" "}
+                <span className="text-blue-500">click to upload</span>
+              </span>
+            </label>
+            <input
+              type="file"
+              id="medicalRecords"
+              name="medicalRecords"
+              className="hidden"
+              onChange={handleChange}
+            />
+            {/* Show uploaded file name */}
+            {formData.medicalRecords && (
+              <p className="text-sm text-gray-600 mt-2">
+                Uploaded: {formData.medicalRecords.name}
+              </p>
+            )}
+
+            {/* Buttons */}
+            <div className="flex justify-between mt-4">
+              <button
+                type="button"
+                onClick={handleSkip}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg"
+              >
+                Skip for Now
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
 };
 
-export default HealthTrends;
-
-// =====================
-// Reusable StatCard Component
-// =====================
-const StatCard = ({ title, value, change, status, positive }) => (
-  <div className="bg-white p-4 rounded-xl shadow-md">
-    <h3 className="text-sm text-gray-500 mb-2">{title}</h3>
-    <p className="text-2xl font-bold">{value}</p>
-    {change ? (
-      <p
-        className={`text-sm ${
-          positive ? "text-green-500" : "text-red-500"
-        } mt-1`}
-      >
-        {change}
-      </p>
-    ) : (
-      <p className="text-sm text-gray-500 mt-1">{status}</p>
-    )}
-  </div>
-);
-
-// =====================
-// Reusable RecommendationCard Component
-// =====================
-const RecommendationCard = ({ icon: Icon, title, description }) => (
-  <div className="flex items-center bg-orange-50 p-4 rounded-xl shadow-md">
-    <div className="p-3 bg-orange-100 rounded-full">
-      <Icon className="w-6 h-6 text-orange-700" />
-    </div>
-    <div className="ml-3">
-      <h4 className="font-semibold">{title}</h4>
-      <p className="text-sm text-gray-500">{description}</p>
-    </div>
-  </div>
-);
+export default HealthProfile;

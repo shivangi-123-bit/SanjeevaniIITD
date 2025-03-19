@@ -3,7 +3,6 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/login";
 import Signup from "./components/Signup";
-import AuthForm from "./components/AuthForm";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./components/Dashboard";
 import Appointments from "./components/Appointments";
