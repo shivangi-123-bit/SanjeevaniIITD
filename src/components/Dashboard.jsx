@@ -1,5 +1,19 @@
 import React from "react";
-import { Bell, User, Calendar, BookOpen, Scan, Bot, IdCard, ClipboardCheck, Activity } from "lucide-react";
+import { useAuth } from "../contexts/authContext/authContext";
+
+import {
+  Bell,
+  User,
+  Calendar,
+  BookOpen,
+  Scan,
+  Bot,
+  IdCard,
+  ClipboardCheck,
+  Activity,
+} from "lucide-react";
+
+
 
 // Reusable Card Component
 const Card = ({ icon: Icon, title, description }) => (
@@ -39,7 +53,9 @@ const SidebarItem = ({ label, icon: Icon, active }) => (
 );
 
 const Dashboard = () => {
+  const { currentUser } = useAuth();
   return (
+
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <div className="w-64 bg-white shadow-lg p-4 space-y-4">
@@ -57,10 +73,12 @@ const Dashboard = () => {
           <h2 className="text-2xl font-bold">My Dashboard</h2>
           <div className="flex items-center space-x-4">
             <Bell className="w-6 h-6 cursor-pointer" />
-            <div className="flex items-center space-x-2">
-              <User className="w-6 h-6" />
-              <span>Welcome, John Smith</span>
-            </div>
+            <h1 className="text-3xl font-bold mb-4 text-gray-800">
+              Welcome to Jeevani, {currentUser?.email}!
+            </h1>
+            <p className="text-lg text-gray-600">
+              You are successfully logged in. 🎉
+            </p>
           </div>
         </div>
 
@@ -77,17 +95,24 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="bg-white shadow-md rounded-2xl p-4">
             <h3 className="text-lg font-semibold">My Health Summary</h3>
-            <p className="text-sm text-gray-500 mt-2">✅ Scheduled Appointments</p>
+            <p className="text-sm text-gray-500 mt-2">
+              ✅ Scheduled Appointments
+            </p>
             <p className="text-sm text-gray-500">🟡 3 Consultations</p>
             <p className="text-sm text-gray-500 mt-2">
-              Next Medicine: <span className="font-semibold">Vitamin D</span> at 2:00 PM
+              Next Medicine: <span className="font-semibold">Vitamin D</span> at
+              2:00 PM
             </p>
           </div>
 
           <div className="bg-white shadow-md rounded-2xl p-4">
             <h3 className="text-lg font-semibold">My Care</h3>
-            <p className="text-sm text-gray-500 mt-2">🕒 Next Checkup: 10:30 AM - Dr. Sarah Wilson</p>
-            <p className="text-sm text-gray-500 mt-2">📄 Test Reports: 5 Reports</p>
+            <p className="text-sm text-gray-500 mt-2">
+              🕒 Next Checkup: 10:30 AM - Dr. Sarah Wilson
+            </p>
+            <p className="text-sm text-gray-500 mt-2">
+              📄 Test Reports: 5 Reports
+            </p>
           </div>
         </div>
 

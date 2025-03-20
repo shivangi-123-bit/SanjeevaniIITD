@@ -1,14 +1,9 @@
+// src/components/Signup.jsx
 import React from "react";
 import AuthForm from "./AuthForm";
-// import Footer from "../pages/LandingPage";
 
 const Signup = () => {
-  return (
-    <>
-      <AuthForm type="signup" />
-      {/* <Footer /> */}
-    </>
-  );
+  return <AuthForm type="signup" />;
 };
 
 export default Signup;

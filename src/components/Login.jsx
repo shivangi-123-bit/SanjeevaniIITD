@@ -1,14 +1,9 @@
+// src/components/Login.jsx
 import React from "react";
 import AuthForm from "./AuthForm";
-import Footer from "../pages/LandingPage";
 
 const Login = () => {
-  return (
-    <>
-      <AuthForm type="login" />
-      <Footer />
-    </>
-  );
+  return <AuthForm type="login" />;
 };
 
 export default Login;
