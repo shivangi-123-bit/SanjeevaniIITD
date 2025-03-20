@@ -1,12 +1,11 @@
-// src/index.js
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client"; // Use the new client API
 import App from "./App";
 import { AuthProvider } from "./contexts/authContext/authContext";
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root")); // Create a root
+root.render(
   <AuthProvider>
     <App />
-  </AuthProvider>,
-  document.getElementById("root")
+  </AuthProvider>
 );

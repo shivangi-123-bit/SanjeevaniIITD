@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Login from "./components/login";
 import Signup from "./components/Signup";
+import Login from "./components/Login";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./components/Dashboard";
 import Appointments from "./components/Appointments";
@@ -27,4 +28,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;

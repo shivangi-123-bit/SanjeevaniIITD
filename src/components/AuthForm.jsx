@@ -6,7 +6,7 @@ import {
   doCreateUserWithEmailAndPassword,
   doSignInWithGoogle,
 } from "../firebase/auth";
-import { useAuth } from "../contexts/authContext/authContext";
+ import { useAuth } from "../contexts/authContext/authContext.jsx";
 
 const AuthForm = ({ type }) => {
   const { currentUser } = useAuth();
@@ -127,4 +127,4 @@ const AuthForm = ({ type }) => {
   );
 };
 
-export default AuthForm;
+export default AuthForm;
